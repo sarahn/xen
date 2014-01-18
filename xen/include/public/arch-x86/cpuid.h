@@ -65,4 +65,9 @@
 #define _XEN_CPUID_FEAT1_MMU_PT_UPDATE_PRESERVE_AD 0
 #define XEN_CPUID_FEAT1_MMU_PT_UPDATE_PRESERVE_AD  (1u<<0)
 
+/* Will the host not automatically clear CR0.TS after exiting ? */
+#define _XEN_CPUID_FEAT1_DEV_NA_TS_ALLOWED 1
+#define XEN_CPUID_FEAT1_DEV_NA_TS_ALLOWED \
+    (1u<<_XEN_CPUID_FEAT1_DEV_NA_TS_ALLOWED)
+
 #endif /* __XEN_PUBLIC_ARCH_X86_CPUID_H__ */

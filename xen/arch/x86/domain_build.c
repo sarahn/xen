@@ -126,6 +126,9 @@ boolean_param("dom0_shadow", opt_dom0_shadow);
 static char __initdata opt_dom0_ioports_disable[200] = "";
 string_param("dom0_ioports_disable", opt_dom0_ioports_disable);
 
+static bool_t __initdata opt_dom0_dev_na_ts_allowed;
+boolean_param("dev_na_ts_allowed", opt_dom0_dev_na_ts_allowed);
+
 /* Allow ring-3 access in long mode as guest cannot use ring 1 ... */
 #define BASE_PROT (_PAGE_PRESENT|_PAGE_RW|_PAGE_ACCESSED|_PAGE_USER)
 #define L1_PROT (BASE_PROT|_PAGE_GUEST_KERNEL)
@@ -1060,6 +1063,9 @@ int __init construct_dom0(
     if ( opt_dom0_shadow )
         if ( paging_enable(d, PG_SH_enable) == 0 ) 
             paging_update_paging_modes(v);
+
+    if ( opt_dom0_dev_na_ts_allowed )
+        d->arch.pv_domain.dev_na_ts_allowed = 1;
 
     if ( supervisor_mode_kernel )
     {

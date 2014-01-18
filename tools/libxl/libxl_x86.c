@@ -308,6 +308,10 @@ int libxl__arch_domain_create(libxl__gc *gc, libxl_domain_config *d_config,
         }
     }
 
+    if (d_config->c_info.type == LIBXL_DOMAIN_TYPE_PV &&
+                libxl_defbool_val(d_config->b_info.u.pv.dev_na_ts_allowed))
+        xc_domain_dev_na_ts_allowed(ctx->xch, domid);
+
     return ret;
 }
 

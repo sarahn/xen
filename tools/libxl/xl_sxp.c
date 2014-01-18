@@ -152,6 +152,8 @@ void printf_info_sexp(int domid, libxl_domain_config *d_config)
         printf("\t\t\t(ramdisk %s)\n", b_info->u.pv.ramdisk);
         printf("\t\t\t(e820_host %s)\n",
                libxl_defbool_to_string(b_info->u.pv.e820_host));
+        printf("\t\t\t(dev_na_ts_allowed %s)\n",
+               libxl_defbool_to_string(b_info->u.pv.dev_na_ts_allowed));
         printf("\t\t)\n");
         break;
     default:

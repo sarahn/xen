@@ -1074,6 +1074,7 @@ class sxp2xml:
             'xen_platform_pci',
             'tsc_mode'
             'description',
+            'dev_na_ts_allowed',
             'nomigrate'
         ]
 

@@ -1470,6 +1470,7 @@ skip_vfb:
      * after guest starts is done (with PCI devices passed in). */
     if (c_info->type == LIBXL_DOMAIN_TYPE_PV) {
         xlu_cfg_get_defbool(config, "e820_host", &b_info->u.pv.e820_host, 0);
+        xlu_cfg_get_defbool(config, "dev_na_ts_allowed", &b_info->u.pv.dev_na_ts_allowed, 0);
     }
 
     if (!xlu_cfg_get_list (config, "pci", &pcis, 0, 0)) {

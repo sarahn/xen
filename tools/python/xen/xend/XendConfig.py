@@ -158,6 +158,7 @@ XENAPI_PLATFORM_CFG_TYPES = {
     'monitor_path': str,
     'nographic': int,
     'nomigrate': int,
+    'dev_na_ts_allowed' : int,
     'pae' : int,
     'rtc_timeoffset': int,
     'parallel': str,
@@ -510,6 +511,9 @@ class XendConfig(dict):
 
         if 'nomigrate' not in self['platform']:
             self['platform']['nomigrate'] = 0
+
+        if 'dev_na_ts_allowed' not in self['platform']:
+            self['platform']['dev_na_ts_allowed'] = 0
 
         if self.is_hvm():
             if 'timer_mode' not in self['platform']:

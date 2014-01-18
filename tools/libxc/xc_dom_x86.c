@@ -950,6 +950,14 @@ int xc_dom_feature_translated(struct xc_dom_image *dom)
     return elf_xen_feature_get(XENFEAT_auto_translated_physmap, dom->f_active);
 }
 
+int xc_domain_dev_na_ts_allowed(xc_interface *xch, uint32_t domid)
+{
+    DECLARE_DOMCTL;
+    domctl.cmd = XEN_DOMCTL_dev_na_ts_allowed;
+    domctl.domain = (domid_t)domid;
+    domctl.u.dev_na_ts_allowed.allowed = 1;
+    return do_domctl(xch, &domctl);
+}
 /*
  * Local variables:
  * mode: C

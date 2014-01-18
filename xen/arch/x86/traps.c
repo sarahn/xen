@@ -713,8 +713,12 @@ int cpuid_hypervisor_leaves( uint32_t idx, uint32_t sub_idx,
             *ebx = 0x40000200;
         *ecx = 0;          /* Features 1 */
         *edx = 0;          /* Features 2 */
-        if ( is_pv_vcpu(current) )
+        if ( is_pv_vcpu(current) ) {
             *ecx |= XEN_CPUID_FEAT1_MMU_PT_UPDATE_PRESERVE_AD;
+
+            if (current->domain->arch.pv_domain.dev_na_ts_allowed)
+                *ecx |= XEN_CPUID_FEAT1_DEV_NA_TS_ALLOWED;
+        }
         break;
 
     case 3:
@@ -3269,8 +3273,13 @@ void do_device_not_available(struct cpu_user_regs *regs)
 
     if ( curr->arch.pv_vcpu.ctrlreg[0] & X86_CR0_TS )
     {
-        do_guest_trap(TRAP_no_device, regs, 0);
-        curr->arch.pv_vcpu.ctrlreg[0] &= ~X86_CR0_TS;
+        if (!current->domain->arch.pv_domain.dev_na_ts_allowed) {
+            do_guest_trap(TRAP_no_device, regs, 0);
+            curr->arch.pv_vcpu.ctrlreg[0] &= ~X86_CR0_TS;
+        } else {
+            stts();
+            do_guest_trap(TRAP_no_device, regs, 0);
+        }
     }
     else
         TRACE_0D(TRC_PV_MATH_STATE_RESTORE);

@@ -232,6 +232,8 @@ struct pv_domain
      * unmask the event channel */
     bool_t auto_unmask;
 
+    bool_t dev_na_ts_allowed;
+
     /* map_domain_page() mapping cache. */
     struct mapcache_domain mapcache;
 };

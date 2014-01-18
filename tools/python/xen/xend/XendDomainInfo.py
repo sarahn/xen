@@ -2606,6 +2606,10 @@ class XendDomainInfo:
         if nomigrate is not None and long(nomigrate) != 0:
             xc.domain_disable_migrate(self.domid)
 
+        dev_na_ts_allowed = self.info["platform"].get("dev_na_ts_allowed")
+        if arch.type == "x86" and not hvm and long(dev_na_ts_allowed) != 0:
+            xc.domain_dev_na_ts_allowed(self.domid)
+
         # Optionally enable virtual HPET
         hpet = self.info["platform"].get("hpet")
         if hvm and hpet is not None:

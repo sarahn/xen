@@ -1256,6 +1256,12 @@ long arch_do_domctl(
     }
     break;
 
+    case XEN_DOMCTL_dev_na_ts_allowed:
+    {
+        d->arch.pv_domain.dev_na_ts_allowed = domctl->u.dev_na_ts_allowed.allowed;
+    }
+    break;
+
     default:
         ret = iommu_do_domctl(domctl, d, u_domctl);
         break;

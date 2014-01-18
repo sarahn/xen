@@ -1913,6 +1913,7 @@ int xc_cpuid_apply_policy(xc_interface *xch,
 void xc_cpuid_to_str(const unsigned int *regs,
                      char **strs); /* some strs[] may be NULL if ENOMEM */
 int xc_mca_op(xc_interface *xch, struct xen_mc *mc);
+int xc_domain_dev_na_ts_allowed(xc_interface *xch, uint32_t domid);
 #endif
 
 struct xc_px_val {

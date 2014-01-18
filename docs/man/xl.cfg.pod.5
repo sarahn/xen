@@ -696,6 +696,26 @@ anyway.
 =item B<pvh=BOOLEAN>
 Selects whether to run this PV guest in an HVM container. Default is 0.
 
+=item B<dev_na_ts_allowed=BOOLEAN>
+
+On the x86 platform, selects whether to break PVABI compatibility by 
+setting the task switch bit in control register 0 before entering 
+the device not available trap.
+
+Linux kernels derived from mainline between v2.6.26 through at least 3.14
+may in very rare circumstances have their FPU registers corrupted without
+this enabled.  
+
+Kernels that have the flag 'eagerfpu' in the flags in /proc/cpuinfo do not
+require this to be enabled, but it may be advisable to enable this anyway
+for performance reasons. On machines with the 'fxsr' flag (all x86 CPUs 
+starting from a Pentium 2) and a kernel version of v3.10 or newer 
+may also manually add 'eagerfpu=on' to their kernel command line 
+in order to avoid this bug.
+
+Leaving this on should not cause issues for any kernels derived from
+mainline.
+
 =back
 
 =head2 Fully-virtualised (HVM) Guest Specific Options

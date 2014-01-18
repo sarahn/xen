@@ -333,6 +333,7 @@ int libxl__domain_build_info_setdefault(libxl__gc *gc,
         break;
     case LIBXL_DOMAIN_TYPE_PV:
         libxl_defbool_setdefault(&b_info->u.pv.e820_host, false);
+        libxl_defbool_setdefault(&b_info->u.pv.dev_na_ts_allowed, false);
         if (b_info->shadow_memkb == LIBXL_MEMKB_DEFAULT)
             b_info->shadow_memkb = 0;
         if (b_info->u.pv.slack_memkb == LIBXL_MEMKB_DEFAULT)

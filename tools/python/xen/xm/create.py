@@ -233,6 +233,12 @@ gopts.var('nomigrate', val='NOMIGRATE',
           fn=set_int, default=0,
           use="""migratability (0=migration enabled, 1=migration disabled).""")
 
+gopts.var('dev_na_ts_allowed', val='DEV_NA_TS_ALLOWED',
+          fn=set_int, default=0,
+          use="""Enable task switch during device not available trap
+          (Default is 0).
+          Recommended for x86 Linux kernels derived from mainline from v2.6.26 on.""")
+
 gopts.var('vpt_align', val='VPT_ALIGN',
           fn=set_int, default=1,
           use="Enable aligning all periodic vpt to reduce timer interrupts.")
@@ -776,6 +782,9 @@ def configure_image(vals):
     if vals.nomigrate is not None:
         config_image.append(['nomigrate', vals.nomigrate])
 
+    if vals.dev_na_ts_allowed is not None:
+        config_image.append(['dev_na_ts_allowed', vals.dev_na_ts_allowed])
+
     return config_image
     
 def configure_disks(config_devs, vals):
@@ -1094,7 +1103,7 @@ def make_config(vals):
                    'on_reboot', 'on_crash', 'features', 'on_xend_start',
                    'on_xend_stop', 'target', 'cpuid', 'cpuid_check',
                    'machine_address_size', 'suppress_spurious_page_faults',
-                   'description'])
+                   'description', 'dev_na_ts_allowed', ])
 
     vcpu_conf()
     if vals.uuid is not None:

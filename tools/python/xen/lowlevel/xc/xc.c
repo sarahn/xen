@@ -1779,6 +1779,20 @@ static PyObject *pyxc_domain_disable_migrate(XcObject *self, PyObject *args)
     return zero;
 }
 
+static PyObject *pyxc_domain_dev_na_ts_allowed(XcObject *self, PyObject *args)
+{
+    uint32_t dom;
+
+    if (!PyArg_ParseTuple(args, "i", &dom))
+        return NULL;
+
+    if (xc_domain_dev_na_ts_allowed(self->xc_handle, dom) != 0)
+        return pyxc_error_to_exception(self->xc_handle);
+
+    Py_INCREF(zero);
+    return zero;
+}
+
 static PyObject *pyxc_domain_send_trigger(XcObject *self,
                                           PyObject *args,
                                           PyObject *kwds)
@@ -2729,6 +2743,13 @@ static PyMethodDef pyxc_methods[] = {
       METH_VARARGS, "\n"
       "Marks domain as non-migratable AND non-restoreable\n"
       " dom        [int]: Domain whose TSC mode is being set.\n"
+      "Returns: [int] 0 on success; -1 on error.\n" },
+
+    { "domain_dev_na_ts_allowed",
+      (PyCFunction)pyxc_domain_dev_na_ts_allowed,
+      METH_VARARGS, "\n"
+      "Marks domain as needing task switching enabled during x86 device na trap\n"
+      " dom        [int]: Identifier of domain.\n"
       "Returns: [int] 0 on success; -1 on error.\n" },
 
     { "domain_send_trigger",
